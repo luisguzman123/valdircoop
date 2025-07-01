@@ -1,6 +1,74 @@
 <?php
 require_once '../conexion/db.php';
 
+
+if (isset($_POST['guardar_cabecera'])) {
+    $json = json_decode($_POST['guardar_cabecera'], true);
+    $db = new DB();
+    $c = $db->conectar();
+    $stmt = $c->prepare("INSERT INTO plantilla_indicadores_cabecera(id_especialidad, estado) VALUES(:id_especialidad, :estado)");
+    $stmt->execute([
+        'id_especialidad' => $json['id_especialidad'],
+        'estado' => $json['estado']
+    ]);
+    echo $c->lastInsertId();
+    exit;
+}
+
+if (isset($_POST['actualizar_cabecera'])) {
+    $json = json_decode($_POST['actualizar_cabecera'], true);
+    $db = new DB();
+    $c = $db->conectar();
+    $stmt = $c->prepare("UPDATE plantilla_indicadores_cabecera SET id_especialidad=:id_especialidad, estado=:estado WHERE id_plantilla_indicador_cabecera=:id");
+    $stmt->execute([
+        'id_especialidad' => $json['id_especialidad'],
+        'estado' => $json['estado'],
+        'id' => $json['id_plantilla_indicador_cabecera']
+    ]);
+    exit;
+}
+
+if (isset($_POST['guardar_detalle'])) {
+    $json = json_decode($_POST['guardar_detalle'], true);
+    $db = new DB();
+    $c = $db->conectar();
+    $stmt = $c->prepare("INSERT INTO plantilla_indicador_detalle(id_plantilla_indicador_cabecera,id_padre,nivel,descripcion,puntaje,estado) VALUES(:cabecera,:padre,:nivel,:descripcion,:puntaje,:estado)");
+    $stmt->execute([
+        'cabecera' => $json['id_cabecera'],
+        'padre' => $json['id_padre'],
+        'nivel' => $json['orden'],
+        'descripcion' => $json['descripcion'],
+        'puntaje' => $json['puntaje'],
+        'estado' => $json['estado']
+    ]);
+    echo $c->lastInsertId();
+    exit;
+}
+
+if (isset($_POST['actualizar_detalle'])) {
+    $json = json_decode($_POST['actualizar_detalle'], true);
+    $db = new DB();
+    $c = $db->conectar();
+    $stmt = $c->prepare("UPDATE plantilla_indicador_detalle SET id_padre=:padre,nivel=:nivel,descripcion=:descripcion,puntaje=:puntaje,estado=:estado WHERE id_plantilla_indicador_detalle=:id");
+    $stmt->execute([
+        'padre' => $json['id_padre'],
+        'nivel' => $json['orden'],
+        'descripcion' => $json['descripcion'],
+        'puntaje' => $json['puntaje'],
+        'estado' => $json['estado'],
+        'id' => $json['id_plantilla_indicador_detalle']
+    ]);
+    exit;
+}
+
+if (isset($_POST['eliminar_detalle'])) {
+    $db = new DB();
+    $c = $db->conectar();
+    $c->prepare("DELETE FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_detalle=:id")->execute(['id' => $_POST['eliminar_detalle']]);
+    exit;
+}
+
+
 if (isset($_POST['guardar_completo'])) {
     $json = json_decode($_POST['guardar_completo'], true);
     $db = new DB();
@@ -70,12 +138,6 @@ if (isset($_POST['actualizar_completo'])) {
                 'id_cabecera' => $json['cabecera']['id_plantilla_indicador_cabecera'],
                 'id_padre' => $padre,
                 'nivel' => $d['orden'],
-
-        foreach ($json['detalles'] as $d) {
-            $stmtD->execute([
-                'id_cabecera' => $json['cabecera']['id_plantilla_indicador_cabecera'],
-                'id_padre' => $d['id_padre'],
-                'nivel' => $d['orden'],
                 'descripcion' => $d['descripcion'],
                 'puntaje' => $d['puntaje'],
                 'estado' => $d['estado']
@@ -131,8 +193,8 @@ if (isset($_POST['leer_cabecera_id'])) {
 if (isset($_POST['leer_detalles'])) {
     $db = new DB();
 
-    $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_detalle,id_plantilla_indicador_cabecera,id_padre,nivel AS orden,descripcion,puntaje,estado FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id");
 
+    $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_detalle,id_plantilla_indicador_cabecera,id_padre,nivel AS orden,descripcion,puntaje,estado FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id");
 
     $query->execute(['id' => $_POST['leer_detalles']]);
     if ($query->rowCount()) {
