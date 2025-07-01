@@ -1,3 +1,4 @@
+
 function mostrarListarPlantilla(){
     let contenido = dameContenido("paginas/movimientos/plantilla_indicador/listar.php");
     $("#contenido-principal").html(contenido);
@@ -45,31 +46,39 @@ async function guardarCabecera(){
     mensaje_dialogo_success(mensaje,'\u00c9xitoso');
 }
 
-function agregarFilaDetalle(data=null){
+async function agregarFilaDetalle(data = null) {
     if($("#id_cabecera_edicion").val()==='0'){
         mensaje_dialogo_info_ERROR('Debe guardar la cabecera primero','Atenci\u00f3n');
         return;
     }
-
-    const text =  resp.text();
-    if(text.trim().length>0){
-        mensaje_dialogo_info(`No se pudo guardar: ${text}`,'Error');
-        return;
+    if(!data){
+        let payload = {
+            id_cabecera: $("#id_cabecera_edicion").val(),
+            descripcion:'',
+            puntaje:0,
+            orden:0,
+            id_padre:0,
+            estado:'ACTIVO'
+        };
+        let body = new URLSearchParams();
+        body.append('guardar_detalle', JSON.stringify(payload));
+        const resp = await fetch('controlador/plantilla_indicador.php',{
+            method:'POST',
+            headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+            body: body
+        });
+        const id = await resp.text();
+        data = {...payload, id_plantilla_indicador_detalle:id.trim()};
     }
-    mensaje_dialogo_success(mensaje,'\u00c9xitoso');
-    mostrarListarPlantilla();
-}
-
-
-function agregarFilaDetalle(data = null) {
-    let idDetalle = data?.id_plantilla_indicador_detalle ?? 0;
-    let descripcion = (data?.descripcion ?? '').replace(/"/g, '&quot;');
-    let puntaje = data?.puntaje ?? 0;
-    let orden = data?.orden ?? data?.nivel ?? 0;
-    let idPadre = data?.id_padre ?? 0;
-    let estado = data?.estado ?? 'ACTIVO';
+    let idDetalle = data.id_plantilla_indicador_detalle;
+    let descripcion = (data.descripcion ?? '').replace(/"/g, '&quot;');
+    let puntaje = data.puntaje ?? 0;
+    let orden = data.orden ?? data.nivel ?? 0;
+    let idPadre = data.id_padre ?? 0;
+    let estado = data.estado ?? 'ACTIVO';
 
     let fila = `<tr data-id="${idDetalle}">
+        <td class="id_det">${idDetalle}</td>
         <td><input type="text" class="form-control desc_det" value="${descripcion}"></td>
         <td><input type="number" class="form-control puntaje_det" value="${puntaje}"></td>
         <td><input type="number" class="form-control orden_det" value="${orden}"></td>
@@ -81,9 +90,8 @@ function agregarFilaDetalle(data = null) {
             </select>
         </td>
         <td>
-            <button class="btn btn-danger remover-detalle">
-                <i class='fa fa-trash'></i>
-            </button>
+            <button class="btn btn-success actualizar-detalle"><i class='fa fa-save'></i></button>
+            <button class="btn btn-danger eliminar-detalle"><i class='fa fa-trash'></i></button>
         </td>
     </tr>`;
 
@@ -92,9 +100,23 @@ function agregarFilaDetalle(data = null) {
 
 
 
-$(document).on('click','.remover-detalle', function(){
-    $(this).closest('tr').remove();
+$(document).on('click','.actualizar-detalle', function(){
+    guardarDetalle($(this).closest('tr'));
+});
 
+$(document).on('click','.eliminar-detalle', function(){
+    const $tr = $(this).closest('tr');
+    const id = $tr.data('id')||0;
+    if(id===0){
+        $tr.remove();
+    }else{
+        Swal.fire({title:'Atenci\u00f3n', text:'Desea eliminar el detalle?', icon:'question', showCancelButton:true, confirmButtonText:'Si', cancelButtonText:'No'}).then(r=>{
+            if(r.isConfirmed){
+                ejecutarAjax('controlador/plantilla_indicador.php','eliminar_detalle='+id);
+                $tr.remove();
+            }
+        });
+    }
 });
 
 function cargarTablaPlantillas(){
@@ -179,7 +201,6 @@ async function guardarDetalle($tr){
     }
     mensaje_dialogo_success('Detalle guardado','\u00c9xitoso');
 }
-
 
 async function cargarListaEspecialidad(selector){
     const $sel = $(selector).empty().append($('<option>',{value:'',text:'Selecciona una especialidad',disabled:true,selected:true}));
