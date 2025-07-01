@@ -295,6 +295,7 @@
                             </a>
                         </li>
 
+
                         <li class="nav-item">
                             <a class="nav-link" onclick="mostrarListarEspecialidad(); return false;" href="#">
                                 <i class="typcn typcn-th-small-outline menu-icon"></i>
@@ -308,6 +309,7 @@
                                 <span class="menu-title">Plantilla Indicador</span>
                             </a>
                         </li>
+
 
 
                         <li class="nav-item">
@@ -369,7 +371,6 @@
         <script src="vista/registro_medidas.js"></script>
         <script src="vista/curso.js"></script>
         <script src="vista/proyecto.js"></script>
-
         <script src="vista/especialidad.js"></script>
         <script src="vista/plantilla_indicador.js"></script>
 

@@ -25,6 +25,8 @@ async function guardarPlantilla(){
         let fila = {
             descripcion: $(this).find('.desc_det').val(),
             puntaje: $(this).find('.puntaje_det').val(),
+            orden: $(this).find('.orden_det').val(),
+            id_padre: $(this).find('.padre_det').val(),
             estado: $(this).find('.estado_det').val()
         };
         if(fila.descripcion) detalles.push(fila);
@@ -56,6 +58,8 @@ function agregarFilaDetalle(data=null){
     let fila = `<tr data-id="${data?data.id_plantilla_indicador_detalle:0}">
         <td><input type="text" class="form-control desc_det" value="${data?data.descripcion:''}"></td>
         <td><input type="number" class="form-control puntaje_det" value="${data?data.puntaje:0}"></td>
+        <td><input type="number" class="form-control orden_det" value="${data?data.orden||data.nivel||0}"></td>
+        <td><input type="number" class="form-control padre_det" value="${data?data.id_padre:0}"></td>
         <td><select class="form-control estado_det">
                 <option value="ACTIVO" ${(data&&data.estado==='ACTIVO')?'selected':''}>Activo</option>
                 <option value="INACTIVO" ${(data&&data.estado==='INACTIVO')?'selected':''}>Inactivo</option>

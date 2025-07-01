@@ -17,8 +17,9 @@ if (isset($_POST['guardar_completo'])) {
         foreach ($json['detalles'] as $d) {
             $stmtD->execute([
                 'id_cabecera' => $cab_id,
-                'id_padre' => 0,
-                'nivel' => 1,
+                'id_padre' => $d['id_padre'],
+                'nivel' => $d['orden'],
+
                 'descripcion' => $d['descripcion'],
                 'puntaje' => $d['puntaje'],
                 'estado' => $d['estado']
@@ -49,8 +50,10 @@ if (isset($_POST['actualizar_completo'])) {
         foreach ($json['detalles'] as $d) {
             $stmtD->execute([
                 'id_cabecera' => $json['cabecera']['id_plantilla_indicador_cabecera'],
-                'id_padre' => 0,
-                'nivel' => 1,
+
+                'id_padre' => $d['id_padre'],
+                'nivel' => $d['orden'],
+
                 'descripcion' => $d['descripcion'],
                 'puntaje' => $d['puntaje'],
                 'estado' => $d['estado']
@@ -98,7 +101,9 @@ if (isset($_POST['leer_cabecera_id'])) {
 
 if (isset($_POST['leer_detalles'])) {
     $db = new DB();
-    $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_detalle,id_plantilla_indicador_cabecera,id_padre,nivel,descripcion,puntaje,estado FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id");
+
+    $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_detalle,id_plantilla_indicador_cabecera,id_padre,nivel AS orden,descripcion,puntaje,estado FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id");
+
     $query->execute(['id' => $_POST['leer_detalles']]);
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
