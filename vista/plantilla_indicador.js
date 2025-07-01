@@ -51,7 +51,7 @@ function agregarFilaDetalle(data=null){
         return;
     }
 
-    const text = await resp.text();
+    const text =  resp.text();
     if(text.trim().length>0){
         mensaje_dialogo_info(`No se pudo guardar: ${text}`,'Error');
         return;
