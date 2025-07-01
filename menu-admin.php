@@ -406,6 +406,7 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarProyecto(); return false;"  href="#">Proyecto</a></li>
 
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarEspecialidad(); return false;"  href="#">Especialidad</a></li>
+                                    <li class="nav-item"> <a class="nav-link" onclick="mostrarListarPlantilla(); return false;"  href="#">Plantilla Indicador</a></li>
 
 
                                 </ul>
@@ -469,6 +470,7 @@
         <script src="vista/proyecto.js"></script>
 
         <script src="vista/especialidad.js"></script>
+        <script src="vista/plantilla_indicador.js"></script>
 
         <!-- End custom js for this page-->
     </body>
