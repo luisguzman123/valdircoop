@@ -339,6 +339,8 @@
         <script src="vista/util.js"></script>
         <script src="vista/usuario.js"></script>
         <script src="vista/registro_medidas.js"></script>
+        <script src="vista/curso.js"></script>
+        <script src="vista/proyecto.js"></script>
 
         <!-- End custom js for this page-->
     </body>
