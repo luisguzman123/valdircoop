@@ -402,6 +402,8 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarDia(); return false;"  href="#">Dias</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarProfesional(); return false;"  href="#">Profesional</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarTurnos(); return false;"  href="#">Turno</a></li>
+                                    <li class="nav-item"> <a class="nav-link" onclick="mostrarListarCurso(); return false;"  href="#">Curso</a></li>
+                                    <li class="nav-item"> <a class="nav-link" onclick="mostrarListarProyecto(); return false;"  href="#">Proyecto</a></li>
 
                                 </ul>
                             </div>
@@ -460,6 +462,8 @@
         <script src="vista/turno.js"></script>
         <script src="vista/panel.js"></script>
         <script src="vista/empresa.js"></script>
+        <script src="vista/curso.js"></script>
+        <script src="vista/proyecto.js"></script>
         <!-- End custom js for this page-->
     </body>
     <script>
