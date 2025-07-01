@@ -263,25 +263,38 @@
                 <!-- partial:partials/_sidebar.html -->
                 <nav class="sidebar sidebar-offcanvas" id="sidebar">
                     <ul class="nav">
-                        <?php 
+<?php
                         if($_SESSION['rol'] == "ADMINISTRADOR"){
-                            
-                        
+
+
                         ?>
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="typcn typcn-device-desktop menu-icon"></i>
                                 <span class="menu-title">Escritorio</span>
-                              
+
                             </a>
                         </li>
-                       
-                       
-                        
+
+
+
                         <?php
                         }
                         ?>
-                       
+
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarListarCurso(); return false;" href="#">
+                                <i class="typcn typcn-book menu-icon"></i>
+                                <span class="menu-title">Curso</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarListarProyecto(); return false;" href="#">
+                                <i class="typcn typcn-briefcase menu-icon"></i>
+                                <span class="menu-title">Proyecto</span>
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link" href="controlador/cerrarSesion.php" aria-expanded="false" >
                                 <i class="typcn typcn-document-text menu-icon"></i>
@@ -339,6 +352,8 @@
         <script src="vista/util.js"></script>
         <script src="vista/usuario.js"></script>
         <script src="vista/registro_medidas.js"></script>
+        <script src="vista/curso.js"></script>
+        <script src="vista/proyecto.js"></script>
 
         <!-- End custom js for this page-->
     </body>
