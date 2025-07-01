@@ -294,8 +294,6 @@
                                 <span class="menu-title">Proyecto</span>
                             </a>
                         </li>
-
-
                         <li class="nav-item">
                             <a class="nav-link" onclick="mostrarListarEspecialidad(); return false;" href="#">
                                 <i class="typcn typcn-th-small-outline menu-icon"></i>
@@ -309,9 +307,6 @@
                                 <span class="menu-title">Plantilla Indicador</span>
                             </a>
                         </li>
-
-
-
                         <li class="nav-item">
                             <a class="nav-link" href="controlador/cerrarSesion.php" aria-expanded="false" >
                                 <i class="typcn typcn-document-text menu-icon"></i>
@@ -373,6 +368,7 @@
         <script src="vista/proyecto.js"></script>
         <script src="vista/especialidad.js"></script>
         <script src="vista/plantilla_indicador.js"></script>
+
 
 
         <!-- End custom js for this page-->

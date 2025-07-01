@@ -14,16 +14,28 @@ if (isset($_POST['guardar_completo'])) {
         ]);
         $cab_id = $c->lastInsertId();
         $stmtD = $c->prepare("INSERT INTO plantilla_indicador_detalle(id_plantilla_indicador_cabecera,id_padre,nivel,descripcion,puntaje,estado) VALUES(:id_cabecera,:id_padre,:nivel,:descripcion,:puntaje,:estado)");
+
+        $map = [];
         foreach ($json['detalles'] as $d) {
+            $padre = 0;
+            if ((int)$d['id_padre'] !== 0) {
+                $padre = $map[$d['id_padre']] ?? (int)$d['id_padre'];
+            }
             $stmtD->execute([
                 'id_cabecera' => $cab_id,
-                'id_padre' => $d['id_padre'],
+                'id_padre' => $padre,
                 'nivel' => $d['orden'],
-
                 'descripcion' => $d['descripcion'],
                 'puntaje' => $d['puntaje'],
                 'estado' => $d['estado']
             ]);
+
+            $newId = $c->lastInsertId();
+            $map[$d['tmp_id']] = $newId;
+            if (isset($d['id_detalle']) && $d['id_detalle']) {
+                $map[$d['id_detalle']] = $newId;
+            }
+
         }
         $c->commit();
     } catch (Exception $e) {
@@ -47,17 +59,34 @@ if (isset($_POST['actualizar_completo'])) {
         ]);
         $c->prepare("DELETE FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id")->execute(['id' => $json['cabecera']['id_plantilla_indicador_cabecera']]);
         $stmtD = $c->prepare("INSERT INTO plantilla_indicador_detalle(id_plantilla_indicador_cabecera,id_padre,nivel,descripcion,puntaje,estado) VALUES(:id_cabecera,:id_padre,:nivel,:descripcion,:puntaje,:estado)");
+
+        $map = [];
+        foreach ($json['detalles'] as $d) {
+            $padre = 0;
+            if ((int)$d['id_padre'] !== 0) {
+                $padre = $map[$d['id_padre']] ?? (int)$d['id_padre'];
+            }
+            $stmtD->execute([
+                'id_cabecera' => $json['cabecera']['id_plantilla_indicador_cabecera'],
+                'id_padre' => $padre,
+                'nivel' => $d['orden'],
+
         foreach ($json['detalles'] as $d) {
             $stmtD->execute([
                 'id_cabecera' => $json['cabecera']['id_plantilla_indicador_cabecera'],
-
                 'id_padre' => $d['id_padre'],
                 'nivel' => $d['orden'],
-
                 'descripcion' => $d['descripcion'],
                 'puntaje' => $d['puntaje'],
                 'estado' => $d['estado']
             ]);
+
+            $newId = $c->lastInsertId();
+            $map[$d['tmp_id']] = $newId;
+            if (isset($d['id_detalle']) && $d['id_detalle']) {
+                $map[$d['id_detalle']] = $newId;
+            }
+
         }
         $c->commit();
     } catch (Exception $e) {
@@ -103,6 +132,7 @@ if (isset($_POST['leer_detalles'])) {
     $db = new DB();
 
     $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_detalle,id_plantilla_indicador_cabecera,id_padre,nivel AS orden,descripcion,puntaje,estado FROM plantilla_indicador_detalle WHERE id_plantilla_indicador_cabecera=:id");
+
 
     $query->execute(['id' => $_POST['leer_detalles']]);
     if ($query->rowCount()) {

@@ -21,8 +21,11 @@ async function guardarPlantilla(){
         estado: $("#estado_cab").val()
     };
     let detalles = [];
-    $("#detalle_tb tr").each(function(){
+
+    $("#detalle_tb tr").each(function(index){
         let fila = {
+            tmp_id: index+1,
+            id_detalle: $(this).data('id')||0,
             descripcion: $(this).find('.desc_det').val(),
             puntaje: $(this).find('.puntaje_det').val(),
             orden: $(this).find('.orden_det').val(),
@@ -54,27 +57,20 @@ async function guardarPlantilla(){
     mostrarListarPlantilla();
 }
 
-function agregarFilaDetalle(data = null) {
-    let desc = data ? (data.descripcion || '').replace(/"/g, '&quot;') : '';
-    let puntaje = data ? (data.puntaje ?? 0) : 0;
-    let orden = data ? (data.orden ?? data.nivel ?? 0) : 0;
-    let padre = data ? (data.id_padre ?? 0) : 0;
-    let estadoActivo = data && data.estado === 'ACTIVO' ? 'selected' : '';
-    let estadoInactivo = data && data.estado === 'INACTIVO' ? 'selected' : '';
 
-    let fila = `
-    <tr data-id="${data ? data.id_plantilla_indicador_detalle : 0}">
-        <td><input type="text" class="form-control desc_det" value="${desc}"></td>
-        <td><input type="number" class="form-control puntaje_det" value="${puntaje}"></td>
-        <td><input type="number" class="form-control orden_det" value="${orden}"></td>
-        <td><input type="number" class="form-control padre_det" value="${padre}"></td>
-        <td>
-            <select class="form-control estado_det">
-                <option value="ACTIVO" ${estadoActivo}>Activo</option>
-                <option value="INACTIVO" ${estadoInactivo}>Inactivo</option>
-            </select>
-        </td>
-        <td><button class="btn btn-danger remover-detalle"><i class="fa fa-trash"></i></button></td>
+function agregarFilaDetalle(data=null){
+    let fila = `<tr data-id="${data?data.id_plantilla_indicador_detalle:0}">
+        <td><input type="text" class="form-control desc_det" value="${data?data.descripcion:''}"></td>
+        <td><input type="number" class="form-control puntaje_det" value="${data?data.puntaje:0}"></td>
+        <td><input type="number" class="form-control orden_det" value="${data?data.orden||data.nivel||0}"></td>
+        <td><input type="number" class="form-control padre_det" value="${data?data.id_padre:0}"></td>
+        <td><select class="form-control estado_det">
+                <option value="ACTIVO" ${(data&&data.estado==='ACTIVO')?'selected':''}>Activo</option>
+                <option value="INACTIVO" ${(data&&data.estado==='INACTIVO')?'selected':''}>Inactivo</option>
+            </select></td>
+        <td><button class="btn btn-danger remover-detalle"><i class='fa fa-trash'></i></button></td>
+
+
     </tr>`;
     $("#detalle_tb").append(fila);
 }

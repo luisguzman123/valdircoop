@@ -23,14 +23,12 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-
                   <th style="width:30%">Descripción</th>
                   <th style="width:10%">Puntaje</th>
                   <th style="width:15%">Orden</th>
                   <th style="width:25%">Padre</th>
                   <th style="width:10%">Estado</th>
                   <th style="width:10%"></th>
-
                 </tr>
               </thead>
               <tbody id="detalle_tb"></tbody>
