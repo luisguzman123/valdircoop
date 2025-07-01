@@ -23,6 +23,7 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
+                  <th style="width:5%">ID</th>
                   <th style="width:30%">Descripción</th>
                   <th style="width:10%">Puntaje</th>
                   <th style="width:15%">Orden</th>
