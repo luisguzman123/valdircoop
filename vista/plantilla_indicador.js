@@ -21,6 +21,7 @@ async function guardarPlantilla(){
         estado: $("#estado_cab").val()
     };
     let detalles = [];
+
     $("#detalle_tb tr").each(function(index){
         let fila = {
             tmp_id: index+1,
@@ -56,6 +57,7 @@ async function guardarPlantilla(){
     mostrarListarPlantilla();
 }
 
+
 function agregarFilaDetalle(data=null){
     let fila = `<tr data-id="${data?data.id_plantilla_indicador_detalle:0}">
         <td><input type="text" class="form-control desc_det" value="${data?data.descripcion:''}"></td>
@@ -67,9 +69,12 @@ function agregarFilaDetalle(data=null){
                 <option value="INACTIVO" ${(data&&data.estado==='INACTIVO')?'selected':''}>Inactivo</option>
             </select></td>
         <td><button class="btn btn-danger remover-detalle"><i class='fa fa-trash'></i></button></td>
+
+
     </tr>`;
     $("#detalle_tb").append(fila);
 }
+
 
 $(document).on('click','.remover-detalle', function(){
     $(this).closest('tr').remove();
