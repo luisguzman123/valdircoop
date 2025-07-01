@@ -58,20 +58,32 @@ async function guardarPlantilla(){
 }
 
 
-function agregarFilaDetalle(data=null){
-    let fila = `<tr data-id="${data?data.id_plantilla_indicador_detalle:0}">
-        <td><input type="text" class="form-control desc_det" value="${data?data.descripcion:''}"></td>
-        <td><input type="number" class="form-control puntaje_det" value="${data?data.puntaje:0}"></td>
-        <td><input type="number" class="form-control orden_det" value="${data?data.orden||data.nivel||0}"></td>
-        <td><input type="number" class="form-control padre_det" value="${data?data.id_padre:0}"></td>
-        <td><select class="form-control estado_det">
-                <option value="ACTIVO" ${(data&&data.estado==='ACTIVO')?'selected':''}>Activo</option>
-                <option value="INACTIVO" ${(data&&data.estado==='INACTIVO')?'selected':''}>Inactivo</option>
-            </select></td>
-        <td><button class="btn btn-danger remover-detalle"><i class='fa fa-trash'></i></button></td>
+function agregarFilaDetalle(data = null) {
+    let idDetalle = data?.id_plantilla_indicador_detalle ?? 0;
+    let descripcion = (data?.descripcion ?? '').replace(/"/g, '&quot;');
+    let puntaje = data?.puntaje ?? 0;
+    let orden = data?.orden ?? data?.nivel ?? 0;
+    let idPadre = data?.id_padre ?? 0;
+    let estado = data?.estado ?? 'ACTIVO';
 
-
+    let fila = `<tr data-id="${idDetalle}">
+        <td><input type="text" class="form-control desc_det" value="${descripcion}"></td>
+        <td><input type="number" class="form-control puntaje_det" value="${puntaje}"></td>
+        <td><input type="number" class="form-control orden_det" value="${orden}"></td>
+        <td><input type="number" class="form-control padre_det" value="${idPadre}"></td>
+        <td>
+            <select class="form-control estado_det">
+                <option value="ACTIVO" ${estado === 'ACTIVO' ? 'selected' : ''}>Activo</option>
+                <option value="INACTIVO" ${estado === 'INACTIVO' ? 'selected' : ''}>Inactivo</option>
+            </select>
+        </td>
+        <td>
+            <button class="btn btn-danger remover-detalle">
+                <i class='fa fa-trash'></i>
+            </button>
+        </td>
     </tr>`;
+
     $("#detalle_tb").append(fila);
 }
 
