@@ -10,11 +10,14 @@ function mostrarAgregarPlantilla(){
     cargarListaEspecialidad("#especialidad_id");
 }
 
+
 async function guardarCabecera(){
+
     if($("#especialidad_id").val()===null){
         mensaje_dialogo_info_ERROR("Debe seleccionar una especialidad","Atenci\u00f3n");
         return;
     }
+
     let datos = {
         id_especialidad: $("#especialidad_id").val(),
         estado: $("#estado_cab").val()
@@ -27,12 +30,14 @@ async function guardarCabecera(){
         datos.id_plantilla_indicador_cabecera = $("#id_cabecera_edicion").val();
         body.append('actualizar_cabecera', JSON.stringify(datos));
         mensaje = 'Cabecera actualizada';
+
     }
     const resp = await fetch('controlador/plantilla_indicador.php',{
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
         body: body
     });
+
     const id = await resp.text();
     if($("#id_cabecera_edicion").val()==='0'){
         $("#id_cabecera_edicion").val(id.trim());
@@ -45,6 +50,19 @@ function agregarFilaDetalle(data=null){
         mensaje_dialogo_info_ERROR('Debe guardar la cabecera primero','Atenci\u00f3n');
         return;
     }
+
+    const text = await resp.text();
+    if(text.trim().length>0){
+        mensaje_dialogo_info(`No se pudo guardar: ${text}`,'Error');
+        return;
+    }
+    mensaje_dialogo_success(mensaje,'\u00c9xitoso');
+    mostrarListarPlantilla();
+}
+
+
+function agregarFilaDetalle(data=null){
+
     let fila = `<tr data-id="${data?data.id_plantilla_indicador_detalle:0}">
         <td><input type="text" class="form-control desc_det" value="${data?data.descripcion:''}"></td>
         <td><input type="number" class="form-control puntaje_det" value="${data?data.puntaje:0}"></td>
@@ -54,31 +72,18 @@ function agregarFilaDetalle(data=null){
                 <option value="ACTIVO" ${(data&&data.estado==='ACTIVO')?'selected':''}>Activo</option>
                 <option value="INACTIVO" ${(data&&data.estado==='INACTIVO')?'selected':''}>Inactivo</option>
             </select></td>
-        <td>
-            <button class="btn btn-success guardar-detalle"><i class='fa fa-save'></i></button>
-            <button class="btn btn-danger eliminar-detalle"><i class='fa fa-trash'></i></button>
-        </td>
+
+        <td><button class="btn btn-danger remover-detalle"><i class='fa fa-trash'></i></button></td>
+
     </tr>`;
     $("#detalle_tb").append(fila);
 }
 
-$(document).on('click','.guardar-detalle', function(){
-    guardarDetalle($(this).closest('tr'));
-});
 
-$(document).on('click','.eliminar-detalle', function(){
-    let $tr = $(this).closest('tr');
-    let id = $tr.data('id')||0;
-    if(id===0){
-        $tr.remove();
-    }else{
-        Swal.fire({title:'Atenci\u00f3n', text:'Desea eliminar el detalle?', icon:'question', showCancelButton:true, confirmButtonText:'Si', cancelButtonText:'No'}).then(r=>{
-            if(r.isConfirmed){
-                ejecutarAjax('controlador/plantilla_indicador.php','eliminar_detalle='+id);
-                $tr.remove();
-            }
-        });
-    }
+
+$(document).on('click','.remover-detalle', function(){
+    $(this).closest('tr').remove();
+
 });
 
 function cargarTablaPlantillas(){
@@ -135,6 +140,7 @@ $(document).on('click','.eliminar-plantilla', function(){
     });
 });
 
+
 async function guardarDetalle($tr){
     let payload = {
         id_cabecera: $("#id_cabecera_edicion").val(),
@@ -162,6 +168,7 @@ async function guardarDetalle($tr){
     }
     mensaje_dialogo_success('Detalle guardado','\u00c9xitoso');
 }
+
 
 async function cargarListaEspecialidad(selector){
     const $sel = $(selector).empty().append($('<option>',{value:'',text:'Selecciona una especialidad',disabled:true,selected:true}));

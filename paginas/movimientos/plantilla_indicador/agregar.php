@@ -37,7 +37,9 @@
         </div>
       </div>
       <div class="mt-4">
+
         <button onclick="guardarCabecera(); return false;" class="btn btn-primary btn-lg px-5">Guardar Cabecera</button>
+
         <button onclick="mostrarListarPlantilla(); return false;" class="btn btn-secondary btn-lg px-5">Volver</button>
       </div>
     </form>
