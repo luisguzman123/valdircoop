@@ -404,7 +404,9 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarTurnos(); return false;"  href="#">Turno</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarCurso(); return false;"  href="#">Curso</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarProyecto(); return false;"  href="#">Proyecto</a></li>
+
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarEspecialidad(); return false;"  href="#">Especialidad</a></li>
+
 
                                 </ul>
                             </div>
@@ -465,7 +467,9 @@
         <script src="vista/empresa.js"></script>
         <script src="vista/curso.js"></script>
         <script src="vista/proyecto.js"></script>
+
         <script src="vista/especialidad.js"></script>
+
         <!-- End custom js for this page-->
     </body>
     <script>
