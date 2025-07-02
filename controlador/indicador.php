@@ -93,4 +93,36 @@ if (isset($_POST['leer_id'])) {
     }
     exit;
 }
+
+
+if (isset($_POST['leer_detalles'])) {
+    $db = new DB();
+    $q = $db->conectar()->prepare("SELECT id_indicador_detalle, descripcion, puntaje, logrado FROM indicador_detalle WHERE id_indicador_cabecera=:id ORDER BY id_indicador_detalle");
+    $q->execute(['id' => $_POST['leer_detalles']]);
+    if ($q->rowCount()) {
+        print_r(json_encode($q->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo '0';
+    }
+    exit;
+}
+
+if (isset($_POST['calificar'])) {
+    $json = json_decode($_POST['calificar'], true);
+    $db = new DB();
+    $c = $db->conectar();
+    $c->beginTransaction();
+    try {
+        $stmt = $c->prepare("UPDATE indicador_detalle SET logrado=:logrado WHERE id_indicador_detalle=:id");
+        foreach ($json['detalles'] as $d) {
+            $stmt->execute(['logrado' => $d['logrado'], 'id' => $d['id']]);
+        }
+        $c->commit();
+    } catch (Exception $e) {
+        $c->rollBack();
+        echo $e->getMessage();
+    }
+    exit;
+}
+
 ?>

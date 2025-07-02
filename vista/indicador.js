@@ -125,3 +125,62 @@ async function cargarListaPlantillas(selector){
         $sel.select2 && $sel.select2({width:'100%',allowClear:true});
     }catch(e){console.error(e);}
 }
+
+
+function mostrarCalificarIndicador(){
+    let contenido = dameContenido("paginas/movimientos/indicador/calificar.php");
+    $("#contenido-principal").html(contenido);
+    cargarListaIndicadores("#indicador_id");
+}
+
+async function cargarListaIndicadores(selector){
+    const $sel = $(selector).empty().append($('<option>',{value:'',text:'Selecciona un indicador',disabled:true,selected:true}));
+    try{
+        const resp = await fetch('controlador/indicador.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams({leer:'1'})});
+        if(!resp.ok) throw new Error(resp.status);
+        const datos = await resp.json();
+        datos.forEach(({id_indicador_cabecera,titulo})=>{
+            $sel.append($('<option>',{value:id_indicador_cabecera,text:`${id_indicador_cabecera} - ${titulo}`}));
+        });
+        $sel.select2 && $sel.select2({width:'100%',allowClear:true});
+    }catch(e){console.error(e);}
+}
+
+async function cargarDetalleCalificar(){
+    const id = $("#indicador_id").val();
+    if(!id) return;
+    const resp = await fetch('controlador/indicador.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams({leer_detalles:id})});
+    if(!resp.ok) return;
+    const datos = await resp.json();
+    let fila='';
+    datos.forEach(d=>{
+        fila+=`<tr data-id="${d.id_indicador_detalle}">`+
+               `<td>${d.descripcion}</td>`+
+               `<td>${d.puntaje}</td>`+
+               `<td><input type='number' class='form-control logrado_det' value='${d.logrado}'></td>`+
+               `</tr>`;
+    });
+    $("#calificar_tb").html(fila);
+}
+
+async function guardarCalificacion(){
+    const id = $("#indicador_id").val();
+    if(!id){
+        mensaje_dialogo_info_ERROR('Debe seleccionar un indicador','Atención');
+        return;
+    }
+    let detalles=[];
+    $("#calificar_tb tr").each(function(){
+        detalles.push({id:$(this).data('id'),logrado:$(this).find('.logrado_det').val()});
+    });
+    const body = new URLSearchParams();
+    body.append('calificar', JSON.stringify({id_indicador:id,detalles}));
+    const resp = await fetch('controlador/indicador.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body});
+    const text = await resp.text();
+    if(text.trim().length>0){
+        mensaje_dialogo_info(`No se pudo guardar: ${text}`,'Error');
+        return;
+    }
+    mensaje_dialogo_success('Calificación guardada','Éxitoso');
+}
+

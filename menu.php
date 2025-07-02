@@ -327,6 +327,14 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarCalificarIndicador(); return false;" href="#">
+                                <i class="typcn typcn-input-checked-outline menu-icon"></i>
+                                <span class="menu-title">Calificar</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-item">
                             <a class="nav-link" href="controlador/cerrarSesion.php" aria-expanded="false" >
                                 <i class="typcn typcn-document-text menu-icon"></i>
                                 <span class="menu-title">Cerrar Sesion</span>
