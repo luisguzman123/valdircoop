@@ -319,6 +319,24 @@
                                 <span class="menu-title">Plantilla Indicador</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarListarIndicador(); return false;" href="#">
+                                <i class="typcn typcn-document-text menu-icon"></i>
+                                <span class="menu-title">Indicador</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarCalificarIndicador(); return false;" href="#">
+                                <i class="typcn typcn-input-checked-outline menu-icon"></i>
+                                <span class="menu-title">Calificar</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarListarJurado(); return false;" href="#">
+                                <i class="typcn typcn-user menu-icon"></i>
+                                <span class="menu-title">Jurado</span>
+                            </a>
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="controlador/cerrarSesion.php" aria-expanded="false" >
@@ -383,6 +401,8 @@
         <script src="vista/especialidad.js"></script>
         <script src="vista/curso_especialidad.js"></script>
         <script src="vista/plantilla_indicador.js"></script>
+        <script src="vista/indicador.js"></script>
+        <script src="vista/jurado.js"></script>
 
 
 
