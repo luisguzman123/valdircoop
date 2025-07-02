@@ -57,8 +57,8 @@ $detalles = $qdet->fetchAll(PDO::FETCH_OBJ);
                 <?php foreach ($detalles as $d): ?>
                     <tr data-id="<?= $d->id_indicador_detalle ?>">
                         <td><?= htmlspecialchars($d->descripcion) ?></td>
-                        <td><?= htmlspecialchars($d->puntaje) ?></td>
-                        <td><input type="number" class="form-control logrado_input" value="<?= htmlspecialchars($d->logrado) ?>"></td>
+                        <td class="puntaje_td"><?= htmlspecialchars($d->puntaje) ?></td>
+                        <td><input type="number" min="0" max="<?= htmlspecialchars($d->puntaje) ?>" class="form-control logrado_input" value="<?= htmlspecialchars($d->logrado) ?>"></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
@@ -73,11 +73,24 @@ $detalles = $qdet->fetchAll(PDO::FETCH_OBJ);
 $(function(){
     $('#guardar_btn').on('click', function(){
         var detalles = [];
+        var valido = true;
         $('#detalles_tb tr').each(function(){
             var id = $(this).data('id');
-            var val = $(this).find('.logrado_input').val();
+            var input = $(this).find('.logrado_input');
+            var val = parseFloat(input.val());
+            var max = parseFloat(input.attr('max'));
+            if(val > max){
+                valido = false;
+                input.addClass('is-invalid');
+            }else{
+                input.removeClass('is-invalid');
+            }
             detalles.push({id:id, logrado:val});
         });
+        if(!valido){
+            Swal.fire('Advertencia','El valor logrado no puede superar el puntaje establecido','warning');
+            return;
+        }
         $.ajax({
             method:'POST',
             url:'controlador/indicador.php',
