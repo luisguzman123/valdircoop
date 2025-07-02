@@ -51,7 +51,7 @@ async function guardarCabecera(){
 }
 
 
-function agregarFilaDetalle(data = null) {
+async function agregarFilaDetalle(data = null) {
 
     if($("#id_cabecera_edicion").val()==='0'){
         mensaje_dialogo_info_ERROR('Debe guardar la cabecera primero','Atenci\u00f3n');
@@ -86,17 +86,6 @@ function agregarFilaDetalle(data = null) {
 
     let fila = `<tr data-id="${idDetalle}">
         <td class="id_det">${idDetalle}</td>
-
-    let idDetalle = data?.id_plantilla_indicador_detalle ?? 0;
-    let tmp = data?.tmp_id ?? tmpIdCounter++;
-    let descripcion = (data?.descripcion ?? '').replace(/"/g, '&quot;');
-    let puntaje = data?.puntaje ?? 0;
-    let orden = data?.orden ?? data?.nivel ?? 0;
-    let idPadre = data?.id_padre ?? 0;
-    let estado = data?.estado ?? 'ACTIVO';
-
-    let fila = `<tr data-id="${idDetalle}" data-tmp="${tmp}">
-
         <td><input type="text" class="form-control desc_det" value="${descripcion}"></td>
         <td><input type="number" class="form-control puntaje_det" value="${puntaje}"></td>
         <td><input type="number" class="form-control orden_det" value="${orden}"></td>

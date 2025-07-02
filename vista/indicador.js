@@ -126,6 +126,7 @@ async function cargarListaPlantillas(selector){
     }catch(e){console.error(e);}
 }
 
+
 function mostrarCalificarIndicador(){
     let contenido = dameContenido("paginas/movimientos/indicador/calificar.php");
     $("#contenido-principal").html(contenido);
@@ -182,3 +183,4 @@ async function guardarCalificacion(){
     }
     mensaje_dialogo_success('Calificación guardada','Éxitoso');
 }
+

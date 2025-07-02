@@ -94,6 +94,7 @@ if (isset($_POST['leer_id'])) {
     exit;
 }
 
+
 if (isset($_POST['leer_detalles'])) {
     $db = new DB();
     $q = $db->conectar()->prepare("SELECT id_indicador_detalle, descripcion, puntaje, logrado FROM indicador_detalle WHERE id_indicador_cabecera=:id ORDER BY id_indicador_detalle");
@@ -123,4 +124,5 @@ if (isset($_POST['calificar'])) {
     }
     exit;
 }
+
 ?>

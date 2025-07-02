@@ -409,8 +409,10 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarCursoEspecialidad(); return false;"  href="#">Curso Especialidad</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarPlantilla(); return false;"  href="#">Plantilla Indicador</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarIndicador(); return false;"  href="#">Indicador</a></li>
+
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarCalificarIndicador(); return false;"  href="#">Calificar</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarJurado(); return false;"  href="#">Jurado</a></li>
+
 
                                 </ul>
                             </div>
