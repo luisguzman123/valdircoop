@@ -186,7 +186,7 @@ $(document).on('click','.project-card',function(){
                             success:function(resp){
                                 resp = $.trim(resp);
                                 if(resp !== '0'){
-                                    window.location.href='print_indicador.php?id='+resp;
+                                    window.location.href='calificar_indicador_jurado.php?id='+resp;
                                 }else{
                                     renderMessage('No se pudo crear evaluación');
                                 }
@@ -196,7 +196,7 @@ $(document).on('click','.project-card',function(){
                     }
                 });
             }else{
-                window.location.href='print_indicador.php?id='+data;
+                window.location.href='calificar_indicador_jurado.php?id='+data;
             }
         },
         error:function(){ renderMessage('Error de conexión'); }
