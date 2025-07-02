@@ -134,7 +134,7 @@ function cargarTablaPlantillas(){
         json.map(function(item){
             fila += `<tr>`;
             fila += `<td>${item.id_plantilla_indicador_cabecera}</td>`;
-            fila += `<td>${item.id_especialidad}</td>`;
+            fila += `<td>${item.especialidad}</td>`;
             fila += `<td>${item.estado}</td>`;
             fila += `<td>
                         <button class='btn btn-warning editar-plantilla'><i class='fa fa-edit'></i> Editar</button>
