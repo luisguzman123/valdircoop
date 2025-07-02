@@ -168,7 +168,7 @@ if (isset($_POST['eliminar_cabecera'])) {
 
 if (isset($_POST['leer_cabeceras'])) {
     $db = new DB();
-    $query = $db->conectar()->prepare("SELECT id_plantilla_indicador_cabecera, id_especialidad, estado FROM plantilla_indicadores_cabecera ORDER BY id_plantilla_indicador_cabecera DESC");
+    $query = $db->conectar()->prepare("SELECT pc.id_plantilla_indicador_cabecera, pc.id_especialidad, e.descripcion AS especialidad, pc.estado FROM plantilla_indicadores_cabecera pc JOIN especialidades e ON pc.id_especialidad = e.id_especialidad ORDER BY pc.id_plantilla_indicador_cabecera DESC");
     $query->execute();
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
