@@ -58,6 +58,7 @@ if (isset($_POST['leer_id'])) {
 }
 if (isset($_POST['cursos_por_especialidad'])) {
     $db = new DB();
+
     $query = $db->conectar()->prepare(
         "SELECT c.id_curso, c.descripcion
          FROM curso_especialidades ce
@@ -66,6 +67,7 @@ if (isset($_POST['cursos_por_especialidad'])) {
            AND ce.estado='ACTIVO'
            AND c.estado='ACTIVO'"
     );
+
     $query->execute(['id' => $_POST['cursos_por_especialidad']]);
     if ($query->rowCount()) {
         print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));

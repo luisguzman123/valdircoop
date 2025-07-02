@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-07-2025 a las 16:53:40
+-- Tiempo de generación: 02-07-2025 a las 03:59:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,6 +55,13 @@ CREATE TABLE `curso_especialidades` (
   `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `curso_especialidades`
+--
+
+INSERT INTO `curso_especialidades` (`id_curso_especialidad`, `id_curso`, `id_especialidad`, `estado`) VALUES
+(0, 3, 10, 'ACTIVO');
+
 -- --------------------------------------------------------
 
 --
@@ -98,6 +105,13 @@ CREATE TABLE `indicador_cabecera` (
   `estado` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `indicador_cabecera`
+--
+
+INSERT INTO `indicador_cabecera` (`id_indicador_cabecera`, `id_proyecto_curso`, `titulo`, `id_plantilla`, `nro_stand`, `estado`) VALUES
+(8, 2, 'NUEVO', 1, '222', 'ACTIVO');
+
 -- --------------------------------------------------------
 
 --
@@ -112,6 +126,63 @@ CREATE TABLE `indicador_detalle` (
   `descripcion` varchar(300) NOT NULL,
   `puntaje` int(11) NOT NULL,
   `logrado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `indicador_detalle`
+--
+
+INSERT INTO `indicador_detalle` (`id_indicador_detalle`, `id_indicador_cabecera`, `id_padre`, `nivel`, `descripcion`, `puntaje`, `logrado`) VALUES
+(46, 8, 0, 1, 'I.- INFORME', 0, 0),
+(47, 8, 46, 2, '1.- Identificación y formulación del problema – Objetivos- Justificación', 0, 0),
+(48, 8, 47, 3, '1.1.- El planteamiento del problema es preciso', 1, 1),
+(49, 8, 47, 3, '1.2.- Los objetivos del proyecto son claros', 1, 0),
+(50, 8, 47, 3, '1.3.- La justificación responde a las preguntas ¿por qué?, ¿para qué? y ¿para quién?', 1, 0),
+(51, 8, 46, 2, '2.- Elaboración y utilización de datos', 0, 0),
+(52, 8, 51, 3, '2.1.- El Marco Teórico presenta informaciones precisas en relación al tema', 1, 0),
+(53, 8, 51, 3, '2.2.- El Marco Teórico presenta las referencias utilizadas', 1, 0),
+(54, 8, 51, 3, '2.3.- Describe en forma detallada la Metodología empleada', 1, 0),
+(55, 8, 51, 3, '2.4.- Selección y aplicación de instrumentos para la recolección de datos', 1, 0),
+(56, 8, 51, 3, '2.5.- Análisis adecuado de los datos', 1, 0),
+(57, 8, 46, 2, '3.- Conclusiones', 0, 0),
+(58, 8, 57, 3, '3.1.- Es coherente en relación con los objetivos', 1, 0),
+(59, 8, 57, 3, '3.2.- Es pertinente en el sostenimiento de los resultados', 1, 0),
+(60, 8, 0, 1, 'II.- TEMA', 0, 0),
+(61, 8, 60, 2, '1.- Viabilidad y sustentabilidad', 0, 0),
+(62, 8, 61, 3, '1.1.- Responde a la necesidad o aporte a la comunidad', 1, 0),
+(63, 8, 61, 3, '1.2.- Es económicamente viable', 1, 0),
+(64, 8, 60, 2, '2.- Aplicación y Proyección', 0, 0),
+(65, 8, 64, 3, '2.1.- Se plantea en forma concreta la posible aplicación y proyección', 1, 0),
+(66, 8, 60, 2, '3.- Creatividad y Originalidad', 0, 0),
+(67, 8, 66, 3, '3.1.- La investigación es innovadora', 1, 0),
+(68, 8, 66, 3, '3.2.- Propone nueva alternativa de solución al problema planteado', 1, 0),
+(69, 8, 0, 1, 'III.- EXPOSICIÓN', 0, 0),
+(70, 8, 69, 2, '1.- Defensa Oral', 0, 0),
+(71, 8, 70, 3, '1.1.- Utiliza correctamente el lenguaje técnico', 1, 0),
+(72, 8, 70, 3, '1.2.- Demuestra dominio del tema durante la exposición', 1, 0),
+(73, 8, 70, 3, '1.3.- Responde correctamente a las preguntas formuladas por el evaluador', 1, 0),
+(74, 8, 70, 3, '1.4.- Explica con claridad los gráficos o diagramas del informe', 1, 0),
+(75, 8, 70, 3, '1.5.- Utiliza correctamente el tiempo', 1, 0),
+(76, 8, 69, 2, '2.- Valores', 0, 0),
+(77, 8, 76, 3, '2.1.- Respeta las normas de seguridad y prohibiciones', 1, 0),
+(78, 8, 76, 3, '2.2.- Cumple con el horario establecido por la organización', 1, 0),
+(79, 8, 76, 3, '2.3.- El stand demuestra pulcritud y limpieza', 1, 0),
+(80, 8, 0, 1, 'IV.- CUADERNO DE CAMPO', 0, 0),
+(81, 8, 80, 2, '4.1.- Refleja el trabajo realizado por los estudiantes', 1, 0),
+(82, 8, 80, 2, '4.2.- Contiene el registro detallado de las observaciones', 1, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jurados`
+--
+
+CREATE TABLE `jurados` (
+  `id_jurado` int(11) NOT NULL,
+  `nombre_apellido` varchar(100) DEFAULT NULL,
+  `cedula` int(11) DEFAULT NULL,
+  `pass` varchar(200) DEFAULT NULL,
+  `estado` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -140,7 +211,13 @@ INSERT INTO `plantilla_indicadores_cabecera` (`id_plantilla_indicador_cabecera`,
 (7, 6, 'ACTIVO'),
 (8, 7, 'ACTIVO'),
 (9, 8, 'ACTIVO'),
-(10, 10, 'ACTIVO');
+(10, 10, 'ACTIVO'),
+(11, 10, 'ACTIVO'),
+(12, 10, 'ACTIVO'),
+(13, 10, 'ACTIVO'),
+(14, 9, 'ACTIVO'),
+(15, 10, 'ACTIVO'),
+(16, 1, 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -496,7 +573,14 @@ INSERT INTO `plantilla_indicador_detalle` (`id_plantilla_indicador_detalle`, `id
 (368, 10, 366, 3, '2.2.- Cumple con el horario establecido por la organización', 1, 'activo'),
 (369, 10, 0, 1, 'V.- CUADERNO DE CAMPO', 0, 'activo'),
 (370, 10, 369, 2, '4.1.- Refleja el trabajo realizado por los estudiantes', 1, 'activo'),
-(371, 10, 369, 2, '4.2.- Contiene el registro detallado de las observaciones', 1, 'activo');
+(371, 10, 369, 2, '4.2.- Contiene el registro detallado de las observaciones', 1, 'activo'),
+(372, 11, 0, 1, 'asdasdasd', 11, 'ACTIVO'),
+(373, 11, 0, 1, 'ddddd', 22, 'ACTIVO'),
+(374, 14, 0, 0, 'aaaaaa', 0, 'ACTIVO'),
+(375, 15, 0, 0, 'dddddddd', 0, 'ACTIVO'),
+(376, 15, 375, 1, 'ssss', 2, 'ACTIVO'),
+(377, 16, 0, 1, 'INFORME', 0, 'ACTIVO'),
+(378, 16, 377, 1, '1. Identificación y formulación del problema – Objetivos- Justificación ', 0, 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -596,7 +680,13 @@ ALTER TABLE `indicador_cabecera`
 -- Indices de la tabla `indicador_detalle`
 --
 ALTER TABLE `indicador_detalle`
-  ADD PRIMARY KEY (`id_indicador_detalle`);
+  ADD PRIMARY KEY (`id_indicador_detalle`,`id_indicador_cabecera`,`id_padre`) USING BTREE;
+
+--
+-- Indices de la tabla `jurados`
+--
+ALTER TABLE `jurados`
+  ADD PRIMARY KEY (`id_jurado`);
 
 --
 -- Indices de la tabla `plantilla_indicadores_cabecera`
@@ -639,37 +729,43 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_curso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `especialidades`
 --
 ALTER TABLE `especialidades`
-  MODIFY `id_especialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_especialidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `indicador_cabecera`
 --
 ALTER TABLE `indicador_cabecera`
-  MODIFY `id_indicador_cabecera` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_indicador_cabecera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `indicador_detalle`
 --
 ALTER TABLE `indicador_detalle`
-  MODIFY `id_indicador_detalle` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_indicador_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+
+--
+-- AUTO_INCREMENT de la tabla `jurados`
+--
+ALTER TABLE `jurados`
+  MODIFY `id_jurado` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `plantilla_indicadores_cabecera`
 --
 ALTER TABLE `plantilla_indicadores_cabecera`
-  MODIFY `id_plantilla_indicador_cabecera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_plantilla_indicador_cabecera` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `plantilla_indicador_detalle`
 --
 ALTER TABLE `plantilla_indicador_detalle`
-  MODIFY `id_plantilla_indicador_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=372;
+  MODIFY `id_plantilla_indicador_detalle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=379;
 
 --
 -- AUTO_INCREMENT de la tabla `proyectos`
