@@ -61,6 +61,32 @@ $iconos = [
 <script src="js/off-canvas.js"></script>
 <script src="js/template.js"></script>
 <script>
+
+$(document).on('click', '.specialty-card', function () {
+    var id = $(this).data('id');
+    $.ajax({
+        method: 'POST',
+        url: 'controlador/curso_especialidad.php',
+        data: {cursos_por_especialidad: id},
+        success: function (data) {
+            var list = $('#lista-cursos').empty();
+            data = $.trim(data);
+            if (data === '0') {
+                list.append('<li class="list-group-item">No hay cursos</li>');
+            } else {
+                try {
+                    var cursos = JSON.parse(data);
+                    cursos.forEach(function (c) {
+                        list.append('<li class="list-group-item">' + c.descripcion + '</li>');
+                    });
+                } catch (e) {
+                    list.append('<li class="list-group-item">Error al cargar cursos</li>');
+                }
+            }
+        },
+        error: function () {
+            $('#lista-cursos').html('<li class="list-group-item">Error de conexión</li>');
+
 $('.specialty-card').on('click', function(){
     var id = $(this).data('id');
     $.post('controlador/curso_especialidad.php', {cursos_por_especialidad:id}, function(data){
@@ -72,6 +98,7 @@ $('.specialty-card').on('click', function(){
             cursos.forEach(function(c){
                 list.append('<li class="list-group-item">'+c.descripcion+'</li>');
             });
+
         }
     });
 });

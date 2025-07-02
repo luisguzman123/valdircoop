@@ -1,5 +1,7 @@
 <?php
+
 require_once "./conexion/db.php";
+
 
 class JuradoSession {
     public function __construct() {
@@ -10,7 +12,9 @@ class JuradoSession {
         $passMD5 = md5($pass);
         $db = new DB();
         $query = $db->conectar()->prepare("SELECT id_jurado, nombre_apellido, cedula, pass, estado FROM jurados WHERE cedula = :cedula AND pass = :pass LIMIT 1");
+
         $query->execute(['cedula' => $cedula, 'pass' => $pass]);
+
         if ($query->rowCount() > 0) {
             $jurado = $query->fetch(PDO::FETCH_ASSOC);
             if (strtoupper($jurado['estado']) === 'ACTIVO') {
