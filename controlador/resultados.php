@@ -13,6 +13,7 @@ if(isset($_POST['leer_resultados'])){
                          INNER JOIN especialidades e ON e.id_especialidad=ce.id_especialidad
                          GROUP BY e.descripcion, c.descripcion
                          ORDER BY e.descripcion, total_logrado DESC");
+
     $stmt->execute();
     if($stmt->rowCount()){
         print_r(json_encode($stmt->fetchAll(PDO::FETCH_ASSOC)));

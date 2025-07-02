@@ -18,6 +18,7 @@ async function cargarTablaResultados(){
     }catch(e){
         datos = [];
     }
+
     if(Array.isArray(datos)){
         const cont = $("#resultados_cnt");
         cont.html('');
@@ -42,4 +43,19 @@ async function cargarTablaResultados(){
     } else {
         $("#resultados_cnt").html('');
     }
+
+    let fila = '';
+    if(Array.isArray(datos)){
+        let i = 1;
+        datos.forEach(d => {
+            fila += `<tr>
+                        <td>${i++}</td>
+                        <td>${d.especialidad}</td>
+                        <td>${d.curso}</td>
+                        <td>${d.total_logrado}</td>
+                      </tr>`;
+        });
+    }
+    $("#resultados_tb").html(fila);
+
 }
