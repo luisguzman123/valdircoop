@@ -56,4 +56,23 @@ if (isset($_POST['leer_id'])) {
     }
     exit;
 }
+
+if (isset($_POST['proyectos_por_curso'])) {
+    $db = new DB();
+    $query = $db->conectar()->prepare(
+        "SELECT p.id_proyecto, p.descripcion
+         FROM proyecto_curso pc
+         INNER JOIN proyectos p ON p.id_proyecto = pc.id_proyecto
+         WHERE pc.id_curso = :id
+           AND pc.estado = 'ACTIVO'
+           AND p.estado = 'ACTIVO'"
+    );
+    $query->execute(['id' => $_POST['proyectos_por_curso']]);
+    if ($query->rowCount()) {
+        print_r(json_encode($query->fetchAll(PDO::FETCH_OBJ)));
+    } else {
+        echo '0';
+    }
+    exit;
+}
 ?>
