@@ -18,6 +18,32 @@ async function cargarTablaResultados(){
     }catch(e){
         datos = [];
     }
+
+    if(Array.isArray(datos)){
+        const cont = $("#resultados_cnt");
+        cont.html('');
+        const grupos = {};
+        datos.forEach(d => {
+            if(!grupos[d.especialidad]){
+                grupos[d.especialidad] = [];
+            }
+            grupos[d.especialidad].push(d);
+        });
+        Object.keys(grupos).forEach(esp => {
+            let html = `<h4>${esp}</h4>`;
+            html += '<div class="table-responsive">';
+            html += '<table class="table table-bordered table-striped table-head-bg-primary mt-2">';
+            html += '<thead><tr><th>#</th><th>Curso</th><th>Puntaje Total</th></tr></thead><tbody>';
+            grupos[esp].forEach((r, idx) => {
+                html += `<tr><td>${idx + 1}</td><td>${r.curso}</td><td>${r.total_logrado}</td></tr>`;
+            });
+            html += '</tbody></table></div>';
+            cont.append(html);
+        });
+    } else {
+        $("#resultados_cnt").html('');
+    }
+
     let fila = '';
     if(Array.isArray(datos)){
         let i = 1;
@@ -31,4 +57,5 @@ async function cargarTablaResultados(){
         });
     }
     $("#resultados_tb").html(fila);
+
 }
