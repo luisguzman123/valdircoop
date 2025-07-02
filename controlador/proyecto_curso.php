@@ -60,7 +60,7 @@ if (isset($_POST['leer_id'])) {
 if (isset($_POST['proyectos_por_curso'])) {
     $db = new DB();
     $query = $db->conectar()->prepare(
-        "SELECT p.id_proyecto, p.descripcion
+        "SELECT pc.id_proyecto_curso, p.id_proyecto, p.descripcion
          FROM proyecto_curso pc
          INNER JOIN proyectos p ON p.id_proyecto = pc.id_proyecto
          WHERE pc.id_curso = :id

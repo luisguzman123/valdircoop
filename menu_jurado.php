@@ -69,6 +69,7 @@ $iconos = [
 <script src="js/off-canvas.js"></script>
 <script src="js/template.js"></script>
 <script>
+var JURADO_ID = <?= $_SESSION['id_jurado']; ?>;
 
 var historyStack = [];
 
@@ -112,7 +113,7 @@ function renderProjects(projects){
     html += '<h3 class="mb-4">Proyectos</h3><div class="row">';
     projects.forEach(function(p){
         html += '<div class="col-md-4 mb-3">';
-        html += '  <div class="card project-card">';
+        html += '  <div class="card project-card" data-id="'+p.id_proyecto_curso+'">';
         html += '    <div class="card-body text-center">';
         html += '      <i class="typcn typcn-folder" style="font-size:48px;"></i>';
         html += '      <h5 class="card-title mt-2">'+p.descripcion+'</h5>';
@@ -158,6 +159,47 @@ $(document).on('click','.course-card',function(){
 
 
 
+    });
+});
+
+$(document).on('click','.project-card',function(){
+    var id = $(this).data('id');
+    $.ajax({
+        method:'POST',
+        url:'controlador/indicador.php',
+        data:{existe_jurado_proyecto:1,id_proyecto_curso:id,id_jurado:JURADO_ID},
+        success:function(data){
+            data = $.trim(data);
+            if(data === '0'){
+                Swal.fire({
+                    title:'¿Desea calificar el proyecto?',
+                    icon:'question',
+                    showCancelButton:true,
+                    confirmButtonText:'Si',
+                    cancelButtonText:'No'
+                }).then(function(res){
+                    if(res.isConfirmed){
+                        $.ajax({
+                            method:'POST',
+                            url:'controlador/indicador.php',
+                            data:{crear_para_jurado:1,id_proyecto_curso:id,id_jurado:JURADO_ID},
+                            success:function(resp){
+                                resp = $.trim(resp);
+                                if(resp !== '0'){
+                                    window.location.href='print_indicador.php?id='+resp;
+                                }else{
+                                    renderMessage('No se pudo crear evaluación');
+                                }
+                            },
+                            error:function(){ renderMessage('Error de conexión'); }
+                        });
+                    }
+                });
+            }else{
+                window.location.href='print_indicador.php?id='+data;
+            }
+        },
+        error:function(){ renderMessage('Error de conexión'); }
     });
 });
 

@@ -99,6 +99,7 @@ INSERT INTO `especialidades` (`id_especialidad`, `descripcion`, `estado`) VALUES
 CREATE TABLE `indicador_cabecera` (
   `id_indicador_cabecera` int(11) NOT NULL,
   `id_proyecto_curso` int(11) NOT NULL,
+  `id_jurado` int(11) NOT NULL,
   `titulo` varchar(200) NOT NULL,
   `id_plantilla` int(11) NOT NULL,
   `nro_stand` varchar(20) NOT NULL,
@@ -109,8 +110,8 @@ CREATE TABLE `indicador_cabecera` (
 -- Volcado de datos para la tabla `indicador_cabecera`
 --
 
-INSERT INTO `indicador_cabecera` (`id_indicador_cabecera`, `id_proyecto_curso`, `titulo`, `id_plantilla`, `nro_stand`, `estado`) VALUES
-(8, 2, 'NUEVO', 1, '222', 'ACTIVO');
+INSERT INTO `indicador_cabecera` (`id_indicador_cabecera`, `id_proyecto_curso`, `id_jurado`, `titulo`, `id_plantilla`, `nro_stand`, `estado`) VALUES
+(8, 2, 1, 'NUEVO', 1, '222', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -674,7 +675,8 @@ ALTER TABLE `especialidades`
 -- Indices de la tabla `indicador_cabecera`
 --
 ALTER TABLE `indicador_cabecera`
-  ADD PRIMARY KEY (`id_indicador_cabecera`);
+  ADD PRIMARY KEY (`id_indicador_cabecera`),
+  ADD KEY `id_jurado` (`id_jurado`);
 
 --
 -- Indices de la tabla `indicador_detalle`
