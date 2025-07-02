@@ -23,7 +23,19 @@
                     <tbody id="resultados_tb"></tbody>
                 </table>
             </div>
-
         </div>
+
+        <div class="col-md-12" style="margin-top: 40px;">
+            <h3>Resultados por Proyecto</h3>
+            <div id="resultados_proyecto_cnt"></div>
+        </div>
+
+        <div class="col-md-12" style="margin-top: 40px;">
+            <h3>Premio al Mejor Proyecto del Curso</h3>
+            <div id="premio_curso_cnt"></div>
+            <h3 class="mt-4">Premio al Mejor Proyecto de la Especialidad</h3>
+            <div id="premio_especialidad_cnt"></div>
+        </div>
+
     </div>
 </div>
