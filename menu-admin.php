@@ -411,6 +411,7 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarIndicador(); return false;"  href="#">Indicador</a></li>
 
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarCalificarIndicador(); return false;"  href="#">Calificar</a></li>
+                                    <li class="nav-item"> <a class="nav-link" onclick="mostrarListarJurado(); return false;"  href="#">Jurado</a></li>
 
 
                                 </ul>
@@ -477,6 +478,7 @@
         <script src="vista/proyecto_curso.js"></script>
         <script src="vista/plantilla_indicador.js"></script>
         <script src="vista/indicador.js"></script>
+        <script src="vista/jurado.js"></script>
         <!-- End custom js for this page-->
     </body>
     <script>
