@@ -340,6 +340,13 @@
                             </a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="mostrarResultados(); return false;" href="#">
+                                <i class="typcn typcn-chart-bar-outline menu-icon"></i>
+                                <span class="menu-title">Resultados</span>
+                            </a>
+                        </li>
+
 
                         <li class="nav-item">
                             <a class="nav-link" href="controlador/cerrarSesion.php" aria-expanded="false" >
@@ -407,6 +414,8 @@
         <script src="vista/indicador.js"></script>
 
         <script src="vista/jurado.js"></script>
+
+        <script src="vista/resultados.js"></script>
 
 
 
