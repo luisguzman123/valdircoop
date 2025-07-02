@@ -408,6 +408,7 @@
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarEspecialidad(); return false;"  href="#">Especialidad</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarCursoEspecialidad(); return false;"  href="#">Curso Especialidad</a></li>
                                     <li class="nav-item"> <a class="nav-link" onclick="mostrarListarPlantilla(); return false;"  href="#">Plantilla Indicador</a></li>
+                                    <li class="nav-item"> <a class="nav-link" onclick="mostrarListarIndicador(); return false;"  href="#">Indicador</a></li>
 
                                 </ul>
                             </div>
@@ -472,6 +473,7 @@
         <script src="vista/curso_especialidad.js"></script>
         <script src="vista/proyecto_curso.js"></script>
         <script src="vista/plantilla_indicador.js"></script>
+        <script src="vista/indicador.js"></script>
         <!-- End custom js for this page-->
     </body>
     <script>
