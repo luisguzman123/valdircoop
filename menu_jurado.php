@@ -70,8 +70,23 @@ $iconos = [
 <script src="js/template.js"></script>
 <script>
 
+var historyStack = [];
+
+function pushState(){
+    historyStack.push($('#content-area').html());
+}
+
+function goBack(){
+    if(historyStack.length > 0){
+        var prev = historyStack.pop();
+        $('#content-area').html(prev);
+    }
+}
+
 function renderCourses(cursos) {
-    var html = '<h3 class="mb-4">Seleccione un curso</h3><div class="row">';
+    pushState();
+    var html = '<button id="back-btn" class="btn btn-light mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
+    html += '<h3 class="mb-4">Seleccione un curso</h3><div class="row">';
     cursos.forEach(function(c){
         html += '<div class="col-md-4 mb-3">';
         html += '  <div class="card course-card" data-id="'+c.id_curso+'">';
@@ -85,7 +100,9 @@ function renderCourses(cursos) {
 }
 
 function renderProjects(projects){
-    var html = '<h3 class="mb-4">Proyectos</h3><div class="row">';
+    pushState();
+    var html = '<button id="back-btn" class="btn btn-light mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
+    html += '<h3 class="mb-4">Proyectos</h3><div class="row">';
     projects.forEach(function(p){
         html += '<div class="col-md-4 mb-3">';
         html += '  <div class="card project-card">';
@@ -135,6 +152,10 @@ $(document).on('click','.course-card',function(){
 
 
     });
+});
+
+$(document).on('click','#back-btn',function(){
+    goBack();
 });
 </script>
 </body>
