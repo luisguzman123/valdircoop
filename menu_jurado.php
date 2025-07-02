@@ -134,21 +134,6 @@ $(document).on('click','.course-card',function(){
 
 
 
-
-$('.specialty-card').on('click', function(){
-    var id = $(this).data('id');
-    $.post('controlador/curso_especialidad.php', {cursos_por_especialidad:id}, function(data){
-        var list = $('#lista-cursos').empty();
-        if(data === '0'){
-            list.append('<li class="list-group-item">No hay cursos</li>');
-        } else {
-            var cursos = JSON.parse(data);
-            cursos.forEach(function(c){
-                list.append('<li class="list-group-item">'+c.descripcion+'</li>');
-            });
-
-        }
-
     });
 });
 </script>
