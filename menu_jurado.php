@@ -83,9 +83,16 @@ function goBack(){
     }
 }
 
+function renderMessage(msg){
+    pushState();
+    var html = '<button id="back-btn" class="btn btn-primary mb-3"><i class="typcn typcn-arrow-left"></i> Atr\u00e1s</button>';
+    html += '<p>' + msg + '</p>';
+    $('#content-area').html(html);
+}
+
 function renderCourses(cursos) {
     pushState();
-    var html = '<button id="back-btn" class="btn btn-light mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
+    var html = '<button id="back-btn" class="btn btn-primary mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
     html += '<h3 class="mb-4">Seleccione un curso</h3><div class="row">';
     cursos.forEach(function(c){
         html += '<div class="col-md-4 mb-3">';
@@ -101,7 +108,7 @@ function renderCourses(cursos) {
 
 function renderProjects(projects){
     pushState();
-    var html = '<button id="back-btn" class="btn btn-light mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
+    var html = '<button id="back-btn" class="btn btn-primary mb-3"><i class="typcn typcn-arrow-left"></i> Atrás</button>';
     html += '<h3 class="mb-4">Proyectos</h3><div class="row">';
     projects.forEach(function(p){
         html += '<div class="col-md-4 mb-3">';
@@ -124,12 +131,12 @@ $(document).on('click', '.specialty-card', function(){
         success:function(data){
             data = $.trim(data);
             if(data === '0'){
-                $('#content-area').html('<p>No hay cursos para esta especialidad</p>');
+                renderMessage('No hay cursos para esta especialidad');
             }else{
-                try{ var cursos = JSON.parse(data); renderCourses(cursos); }catch(e){ $('#content-area').html('<p>Error al cargar cursos</p>'); }
+                try{ var cursos = JSON.parse(data); renderCourses(cursos); }catch(e){ renderMessage('Error al cargar cursos'); }
             }
         },
-        error:function(){ $('#content-area').html('<p>Error de conexión</p>'); }
+        error:function(){ renderMessage('Error de conexión'); }
     });
 });
 
@@ -142,12 +149,12 @@ $(document).on('click','.course-card',function(){
         success:function(data){
             data = $.trim(data);
             if(data === '0'){
-                $('#content-area').html('<p>No hay proyectos para este curso</p>');
+                renderMessage('No hay proyectos para este curso');
             }else{
-                try{ var proyectos = JSON.parse(data); renderProjects(proyectos); }catch(e){ $('#content-area').html('<p>Error al cargar proyectos</p>'); }
+                try{ var proyectos = JSON.parse(data); renderProjects(proyectos); }catch(e){ renderMessage('Error al cargar proyectos'); }
             }
         },
-        error:function(){ $('#content-area').html('<p>Error de conexión</p>'); }
+        error:function(){ renderMessage('Error de conexión'); }
 
 
 
