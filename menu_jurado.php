@@ -38,9 +38,15 @@ $iconos = [
 </head>
 <body>
 <div class="container-scroller">
+
     <div class="content-wrapper p-4" id="content-area">
         <h3 class="mb-4">Seleccione una especialidad</h3>
         <div class="row" id="especialidades-row">
+
+    <div class="content-wrapper p-4">
+        <h3 class="mb-4">Seleccione una especialidad</h3>
+        <div class="row">
+
             <?php foreach ($especialidades as $esp): $icon = $iconos[$esp['id_especialidad']] ?? 'typcn-star'; ?>
             <div class="col-md-4 mb-3">
                 <div class="card specialty-card" data-id="<?= $esp['id_especialidad']; ?>">
@@ -52,6 +58,10 @@ $iconos = [
             </div>
             <?php endforeach; ?>
         </div>
+
+        <h4 class="mt-4">Cursos vinculados</h4>
+        <ul id="lista-cursos" class="list-group"></ul>
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -59,6 +69,7 @@ $iconos = [
 <script src="js/off-canvas.js"></script>
 <script src="js/template.js"></script>
 <script>
+
 function renderCourses(cursos) {
     var html = '<h3 class="mb-4">Seleccione un curso</h3><div class="row">';
     cursos.forEach(function(c){
@@ -120,6 +131,24 @@ $(document).on('click','.course-card',function(){
             }
         },
         error:function(){ $('#content-area').html('<p>Error de conexión</p>'); }
+
+
+
+
+$('.specialty-card').on('click', function(){
+    var id = $(this).data('id');
+    $.post('controlador/curso_especialidad.php', {cursos_por_especialidad:id}, function(data){
+        var list = $('#lista-cursos').empty();
+        if(data === '0'){
+            list.append('<li class="list-group-item">No hay cursos</li>');
+        } else {
+            var cursos = JSON.parse(data);
+            cursos.forEach(function(c){
+                list.append('<li class="list-group-item">'+c.descripcion+'</li>');
+            });
+
+        }
+
     });
 });
 </script>
