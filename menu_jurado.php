@@ -40,7 +40,7 @@ $iconos = [
 <div class="container-scroller">
 
     <div class="content-wrapper p-4" id="content-area">
-        <h3 class="mb-4">Seleccione una especialidad</h3>
+        
         <div class="row" id="especialidades-row">
 
     <div class="content-wrapper p-4">
@@ -59,7 +59,7 @@ $iconos = [
             <?php endforeach; ?>
         </div>
 
-        <h4 class="mt-4">Cursos vinculados</h4>
+        
         <ul id="lista-cursos" class="list-group"></ul>
 
     </div>
