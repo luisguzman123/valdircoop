@@ -1,6 +1,8 @@
 <?php
 
+
 require_once "./conexion/db.php";
+
 
 
 class JuradoSession {
@@ -13,7 +15,9 @@ class JuradoSession {
         $db = new DB();
         $query = $db->conectar()->prepare("SELECT id_jurado, nombre_apellido, cedula, pass, estado FROM jurados WHERE cedula = :cedula AND pass = :pass LIMIT 1");
 
+
         $query->execute(['cedula' => $cedula, 'pass' => $pass]);
+
 
         if ($query->rowCount() > 0) {
             $jurado = $query->fetch(PDO::FETCH_ASSOC);

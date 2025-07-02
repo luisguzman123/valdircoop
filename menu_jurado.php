@@ -38,9 +38,15 @@ $iconos = [
 </head>
 <body>
 <div class="container-scroller">
+
+    <div class="content-wrapper p-4" id="content-area">
+        <h3 class="mb-4">Seleccione una especialidad</h3>
+        <div class="row" id="especialidades-row">
+
     <div class="content-wrapper p-4">
         <h3 class="mb-4">Seleccione una especialidad</h3>
         <div class="row">
+
             <?php foreach ($especialidades as $esp): $icon = $iconos[$esp['id_especialidad']] ?? 'typcn-star'; ?>
             <div class="col-md-4 mb-3">
                 <div class="card specialty-card" data-id="<?= $esp['id_especialidad']; ?>">
@@ -52,8 +58,10 @@ $iconos = [
             </div>
             <?php endforeach; ?>
         </div>
+
         <h4 class="mt-4">Cursos vinculados</h4>
         <ul id="lista-cursos" class="list-group"></ul>
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -61,6 +69,69 @@ $iconos = [
 <script src="js/off-canvas.js"></script>
 <script src="js/template.js"></script>
 <script>
+
+function renderCourses(cursos) {
+    var html = '<h3 class="mb-4">Seleccione un curso</h3><div class="row">';
+    cursos.forEach(function(c){
+        html += '<div class="col-md-4 mb-3">';
+        html += '  <div class="card course-card" data-id="'+c.id_curso+'">';
+        html += '    <div class="card-body text-center">';
+        html += '      <i class="typcn typcn-bookmark" style="font-size:48px;"></i>';
+        html += '      <h5 class="card-title mt-2">'+c.descripcion+'</h5>';
+        html += '    </div></div></div>';
+    });
+    html += '</div>';
+    $('#content-area').html(html);
+}
+
+function renderProjects(projects){
+    var html = '<h3 class="mb-4">Proyectos</h3><div class="row">';
+    projects.forEach(function(p){
+        html += '<div class="col-md-4 mb-3">';
+        html += '  <div class="card project-card">';
+        html += '    <div class="card-body text-center">';
+        html += '      <i class="typcn typcn-folder" style="font-size:48px;"></i>';
+        html += '      <h5 class="card-title mt-2">'+p.descripcion+'</h5>';
+        html += '    </div></div></div>';
+    });
+    html += '</div>';
+    $('#content-area').html(html);
+}
+
+$(document).on('click', '.specialty-card', function(){
+    var id = $(this).data('id');
+    $.ajax({
+        method:'POST',
+        url:'controlador/curso_especialidad.php',
+        data:{cursos_por_especialidad:id},
+        success:function(data){
+            data = $.trim(data);
+            if(data === '0'){
+                $('#content-area').html('<p>No hay cursos para esta especialidad</p>');
+            }else{
+                try{ var cursos = JSON.parse(data); renderCourses(cursos); }catch(e){ $('#content-area').html('<p>Error al cargar cursos</p>'); }
+            }
+        },
+        error:function(){ $('#content-area').html('<p>Error de conexión</p>'); }
+    });
+});
+
+$(document).on('click','.course-card',function(){
+    var id = $(this).data('id');
+    $.ajax({
+        method:'POST',
+        url:'controlador/proyecto_curso.php',
+        data:{proyectos_por_curso:id},
+        success:function(data){
+            data = $.trim(data);
+            if(data === '0'){
+                $('#content-area').html('<p>No hay proyectos para este curso</p>');
+            }else{
+                try{ var proyectos = JSON.parse(data); renderProjects(proyectos); }catch(e){ $('#content-area').html('<p>Error al cargar proyectos</p>'); }
+            }
+        },
+        error:function(){ $('#content-area').html('<p>Error de conexión</p>'); }
+
 
 
 
@@ -77,6 +148,7 @@ $('.specialty-card').on('click', function(){
             });
 
         }
+
     });
 });
 </script>
